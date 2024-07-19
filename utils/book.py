@@ -1,6 +1,6 @@
 from utils.file_manager import FileManager
 
-FILE = '../data/data.json'
+FILE = 'data/data.json'
 
 
 class Book:
@@ -15,7 +15,7 @@ class Book:
         self.status = status
 
     def __str__(self):
-        return f'{self.author} - {self.title} ({self.year}), {'доступна' if self.status else 'выдана'}'
+        return f'{self.book_id}: {self.author} - {self.title} ({self.year}), {'доступна' if self.status else 'выдана'}'
 
 
 class BookManager:
@@ -49,14 +49,6 @@ class BookManager:
             year=d.get('data').get('year'),
             status=d.get('data').get('status'),
         )
-
-    @staticmethod
-    def __get_all(file=FILE) -> list[Book]:
-        data = FileManager.read_json(file)
-        result = []
-        for d in data:
-            result.append(BookManager.__from_dict_to_book(d))
-        return result
 
     @staticmethod
     def get_books(keyword='', file=FILE):

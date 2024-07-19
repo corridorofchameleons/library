@@ -1,7 +1,7 @@
 import json
 
-FILE = '../data/data.json'
-ID_FILE = '../data/latest_id.txt'
+FILE = 'data/data.json'
+ID_FILE = 'data/latest_id.txt'
 
 
 class FileManager:
