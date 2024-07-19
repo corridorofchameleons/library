@@ -32,7 +32,7 @@ def main():
                 except ValueError:
                     print('Введены некорректные данные\n')
                 finally:
-                    print('\n')
+                    print()
             case '3':
                 book_id = input('Введите id книги: ')
                 status = input('Введите статус (1 - доступна, 0 - выдана): ')
@@ -42,7 +42,7 @@ def main():
                     BookManager.update_status(book_id, status, file=FILE)
                 else:
                     print('Введены некорректные данные\n')
-                print('\n')
+                print()
             case '4':
                 book_id = input('Введите id книги: ')
                 if book_id.isdigit():
@@ -55,7 +55,7 @@ def main():
                 books = BookManager.get_books(keyword, file=FILE)
                 for b in books:
                     print(b)
-                print('\n')
+                print()
             case '6':
                 break
             case _:
