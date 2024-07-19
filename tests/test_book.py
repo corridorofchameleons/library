@@ -115,43 +115,30 @@ def test_update_status(book):
     FileManager.clear(TEST_FILE)
 
 
-def test_get_book_by_title(book):
+def test_get_books():
     FileManager.clear(TEST_FILE)
 
-    BookManager.add_book(book, TEST_FILE)
+    BookManager.add_book(Book(
+        book_id=1,
+        author='George Orwell',
+        title='1984',
+        year=1949,
+        status=True,
+    ), TEST_FILE)
 
-    books = BookManager.get_book_by_title('title', TEST_FILE)
+    books = BookManager.get_books('1949', TEST_FILE)
     assert len(books) == 1
 
-    books = BookManager.get_book_by_title('hello world', TEST_FILE)
-    assert len(books) == 0
-
-    FileManager.clear(TEST_FILE)
-
-
-def test_get_book_by_author(book):
-    FileManager.clear(TEST_FILE)
-
-    BookManager.add_book(book, TEST_FILE)
-
-    books = BookManager.get_book_by_author('author', TEST_FILE)
+    books = BookManager.get_books('1984', TEST_FILE)
     assert len(books) == 1
 
-    books = BookManager.get_book_by_author('hello world', TEST_FILE)
-    assert len(books) == 0
-
-    FileManager.clear(TEST_FILE)
-
-
-def test_get_book_by_year(book):
-    FileManager.clear(TEST_FILE)
-
-    BookManager.add_book(book, TEST_FILE)
-
-    books = BookManager.get_book_by_year(1990, TEST_FILE)
+    books = BookManager.get_books('orwell', TEST_FILE)
     assert len(books) == 1
 
-    books = BookManager.get_book_by_year(2990, TEST_FILE)
+    books = BookManager.get_books(file=TEST_FILE)
+    assert len(books) == 1
+
+    books = BookManager.get_books('huxley', TEST_FILE)
     assert len(books) == 0
 
     FileManager.clear(TEST_FILE)

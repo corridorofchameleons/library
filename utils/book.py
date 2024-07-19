@@ -51,7 +51,7 @@ class BookManager:
         )
 
     @staticmethod
-    def get_all(file=FILE) -> list[Book]:
+    def __get_all(file=FILE) -> list[Book]:
         data = FileManager.read_json(file)
         result = []
         for d in data:
@@ -59,42 +59,32 @@ class BookManager:
         return result
 
     @staticmethod
-    def get_book_by_title(title: str, file=FILE) -> list[Book]:
+    def get_books(keyword='', file=FILE):
         '''
-        находит книги по названию
+        метод для вывода книг по ключевому слову
         '''
         data = FileManager.read_json(file)
         result = []
-        for d in data:
-            if title.lower() in d.get('data').get('title').lower():
-                result.append(BookManager.__from_dict_to_book(d))
-        if not result:
-            print('Ничего не найдено')
-        return result
 
-    @staticmethod
-    def get_book_by_author(author: str, file=FILE) -> list[Book]:
-        '''
-        находит кники по автору
-        '''
-        data = FileManager.read_json(file)
-        result = []
-        for d in data:
-            if author.lower() in d.get('data').get('author').lower():
+        # без дополнительных условий вернем весь список
+        if not keyword:
+            for d in data:
                 result.append(BookManager.__from_dict_to_book(d))
-        if not result:
-            print('Ничего не найдено')
-        return result
+            return result
 
-    @staticmethod
-    def get_book_by_year(year: int, file=FILE) -> list[Book]:
-        '''
-        находит книги по году
-        '''
-        data = FileManager.read_json(file)
-        result = []
+        # если принимает 4-значное число, то ищем дополнительно по году выпуска
+        # 1984 Оруэлла найдется по запросу '1949'
+        if keyword.isdigit() and len(keyword) == 4:
+            digit_keyword = int(keyword)
+            for d in data:
+                if d.get('data').get('year') == digit_keyword:
+                    result.append(BookManager.__from_dict_to_book(d))
+
+        # этот цикл ищет по названию и автору
+        # 1984 Оруэлла найдется по запросу '1984'
         for d in data:
-            if d.get('data').get('year') == year:
+            if keyword.lower() in d.get('data').get('author').lower() \
+                    or keyword.lower() in d.get('data').get('title').lower():
                 result.append(BookManager.__from_dict_to_book(d))
         if not result:
             print('Ничего не найдено')
