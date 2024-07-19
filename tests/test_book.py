@@ -20,7 +20,7 @@ def test_init(book):
 
 
 def test_str(book):
-    assert book.__str__() == 'Author - Title (1990)'
+    assert book.__str__() == 'Author - Title (1990), доступна'
 
 
 def test_from_book_to_dict(book):
@@ -111,5 +111,47 @@ def test_update_status(book):
 
     books = BookManager.get_all()
     assert books[0].status == False
+
+    FileManager.clear(TEST_FILE)
+
+
+def test_get_book_by_title(book):
+    FileManager.clear(TEST_FILE)
+
+    BookManager.add_book(book, TEST_FILE)
+
+    books = BookManager.get_book_by_title('title', TEST_FILE)
+    assert len(books) == 1
+
+    books = BookManager.get_book_by_title('hello world', TEST_FILE)
+    assert len(books) == 0
+
+    FileManager.clear(TEST_FILE)
+
+
+def test_get_book_by_author(book):
+    FileManager.clear(TEST_FILE)
+
+    BookManager.add_book(book, TEST_FILE)
+
+    books = BookManager.get_book_by_author('author', TEST_FILE)
+    assert len(books) == 1
+
+    books = BookManager.get_book_by_author('hello world', TEST_FILE)
+    assert len(books) == 0
+
+    FileManager.clear(TEST_FILE)
+
+
+def test_get_book_by_year(book):
+    FileManager.clear(TEST_FILE)
+
+    BookManager.add_book(book, TEST_FILE)
+
+    books = BookManager.get_book_by_year(1990, TEST_FILE)
+    assert len(books) == 1
+
+    books = BookManager.get_book_by_year(2990, TEST_FILE)
+    assert len(books) == 0
 
     FileManager.clear(TEST_FILE)

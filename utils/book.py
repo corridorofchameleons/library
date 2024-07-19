@@ -15,10 +15,13 @@ class Book:
         self.status = status
 
     def __str__(self):
-        return f'{self.author} - {self.title} ({self.year})'
+        return f'{self.author} - {self.title} ({self.year}), {'доступна' if self.status else 'выдана'}'
 
 
 class BookManager:
+    '''
+    Класс работы с книгами
+    '''
     @staticmethod
     def __from_book_to_dict(book: Book) -> dict:
         '''
@@ -56,16 +59,46 @@ class BookManager:
         return result
 
     @staticmethod
-    def get_book_by_title(title: str) -> list[Book]:
-        pass
+    def get_book_by_title(title: str, file=FILE) -> list[Book]:
+        '''
+        находит книги по названию
+        '''
+        data = FileManager.read_json(file)
+        result = []
+        for d in data:
+            if title.lower() in d.get('data').get('title').lower():
+                result.append(BookManager.__from_dict_to_book(d))
+        if not result:
+            print('Ничего не найдено')
+        return result
 
     @staticmethod
-    def get_book_by_author(author: str) -> list[Book]:
-        pass
+    def get_book_by_author(author: str, file=FILE) -> list[Book]:
+        '''
+        находит кники по автору
+        '''
+        data = FileManager.read_json(file)
+        result = []
+        for d in data:
+            if author.lower() in d.get('data').get('author').lower():
+                result.append(BookManager.__from_dict_to_book(d))
+        if not result:
+            print('Ничего не найдено')
+        return result
 
     @staticmethod
-    def get_book_by_year(year: int) -> list[Book]:
-        pass
+    def get_book_by_year(year: int, file=FILE) -> list[Book]:
+        '''
+        находит книги по году
+        '''
+        data = FileManager.read_json(file)
+        result = []
+        for d in data:
+            if d.get('data').get('year') == year:
+                result.append(BookManager.__from_dict_to_book(d))
+        if not result:
+            print('Ничего не найдено')
+        return result
 
     @staticmethod
     def add_book(book: Book, file=FILE) -> None:
