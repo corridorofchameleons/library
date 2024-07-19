@@ -15,7 +15,7 @@ class Book:
         self.status = status
 
     def __str__(self):
-        return f'{self.book_id}: {self.author} - {self.title} ({self.year}), {'доступна' if self.status else 'выдана'}'
+        return f'{self.book_id}: {self.author} - {self.title} ({self.year}), {"доступна" if self.status else "выдана"}'
 
 
 class BookManager:

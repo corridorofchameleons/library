@@ -33,5 +33,8 @@
 **Запуск**
 
 ```commandline
-git clone 
+mkdir library
+cd library
+git clone https://github.com/corridorofchameleons/library.git .
+python3 main.py
 ```
