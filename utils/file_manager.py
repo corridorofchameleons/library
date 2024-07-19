@@ -19,7 +19,7 @@ class FileManager:
             return data
 
     @staticmethod
-    def write_data(new_data, file=FILE):
+    def write_new_data(new_data, file=FILE):
         '''
         записывает в файл
         '''
@@ -29,7 +29,15 @@ class FileManager:
             json.dump(data, f, ensure_ascii=False)
 
     @staticmethod
+    def write_data(data, file=FILE):
+        with open(file, 'w') as f:
+            json.dump(data, f, ensure_ascii=False)
+
+    @staticmethod
     def clear(file=FILE):
+        '''
+        очищает файл
+        '''
         with open(file, 'w') as f:
             data = []
             json.dump(data, f, ensure_ascii=False)

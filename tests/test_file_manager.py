@@ -14,6 +14,41 @@ def test_read_write_json():
 
     data = FileManager.read_json(TEST_FILE)
     assert len(data) == 0
-    FileManager.write_data('new_data', TEST_FILE)
+    FileManager.write_new_data({
+        'id': 1,
+        'data': {
+            'author': 'Author',
+            'title': 'Title',
+            'year': 1990,
+            'status': True,
+        }
+    }, TEST_FILE)
     data = FileManager.read_json(TEST_FILE)
     assert len(data) == 1
+
+    FileManager.write_data([{
+        'id': 1,
+        'data': {
+            'author': 'Author',
+            'title': 'Title',
+            'year': 1990,
+            'status': True,
+        }
+    }], TEST_FILE)
+    data = FileManager.read_json(TEST_FILE)
+    assert len(data) == 1
+
+    FileManager.clear(TEST_FILE)
+
+
+def test_generate_id():
+    '''
+    тестирует генератор id
+    '''
+    book_id = FileManager.generate_id(TEST_ID_FILE)
+    assert book_id == 1
+    book_id = FileManager.generate_id(TEST_ID_FILE)
+    assert book_id == 2
+
+    with open(TEST_ID_FILE, 'w') as f:
+        f.write('')
