@@ -23,10 +23,16 @@ class FileManager:
         '''
         записывает в файл
         '''
-        data = FileManager.read_json()
+        data = FileManager.read_json(file)
         data.append(new_data)
         with open(file, 'w') as f:
-            f.write(data)
+            json.dump(data, f, ensure_ascii=False)
+
+    @staticmethod
+    def clear(file=FILE):
+        with open(file, 'w') as f:
+            data = []
+            json.dump(data, f, ensure_ascii=False)
 
     @staticmethod
     def generate_id(file=ID_FILE):
@@ -39,7 +45,3 @@ class FileManager:
         with open(file, 'w') as f:
             f.write(str(book_id))
         return book_id
-
-
-jm.read_json()
-jm.generate_id()
