@@ -29,6 +29,7 @@ def main():
                         year=int(year)
                     )
                     BookManager.add_book(book, file=FILE)
+                    print(f'Добавлена книга с id {book.book_id}')
                 except ValueError:
                     print('Введены некорректные данные\n')
                 finally:
